@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Quicksand } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/Header";
+import { ThemeWrapper } from "@/components/theme/ThemeWrapper";
+import { SupabaseProvider } from "@/components/providers/SupabaseProvider";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,6 +15,12 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const quicksand = Quicksand({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  variable: '--font-ui-primary',
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,9 +35,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${quicksand.variable} antialiased`}
       >
-        {children}
+        <SupabaseProvider>
+          <ThemeWrapper>
+            <Header />
+            {children}
+            <Footer />
+          </ThemeWrapper>
+        </SupabaseProvider>
       </body>
     </html>
   );
