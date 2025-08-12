@@ -1,0 +1,43 @@
+{
+  "user_id": "vincent",
+  "profile_version": "1.0",
+  "psychology": {
+    "big_five": {
+      "openness": 82,
+      "conscientiousness": 90,
+      "extraversion": 38,
+      "agreeableness": 84,
+      "neuroticism": 65
+    },
+    "mbti": {
+      "type": "INTJ-T",
+      "functions": ["Ni", "Te", "Fi", "Se"],
+      "notes": "INTJ avec Fi fort, approche INFJ sur les valeurs"
+    },
+    "enneagram": {
+      "core_type": "1w9",
+      "tritype": "1-5-2",
+      "motivation": "Améliorer le monde par des systèmes fiables et beaux",
+      "pitfalls": ["Perfectionnisme", "Rigidité sous stress"]
+    },
+    "attachment_style": "Secure-Anxious",
+    "riasec": ["Investigative", "Artistic", "Enterprising"],
+    "strengths_via": [
+      "Love of Learning",
+      "Judgment",
+      "Creativity",
+      "Honesty",
+      "Perseverance",
+      "Kindness"
+    ]
+  },
+  "ux_recommendations": {
+    "interface": "Claire, nette, avec micro-détails esthétiques travaillés",
+    "ia_tone": "Franc, bienveillant, zéro bullshit",
+    "task_management": "Progression visuelle claire avec validations intermédiaires",
+    "reminders": "Messages courts, orientés impact concret",
+    "focus_mode": "Limiter distractions et choix multiples à l’écran",
+    "feedback": "Ancré dans l’éthique et la fiabilité des données"
+  },
+  "mmmask_signature": "Je garde la vision globale, j’anticipe les failles, et je rends le système beau et fiable. Pas pour briller, mais pour que tout le monde puisse compter dessus."
+}
