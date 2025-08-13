@@ -33,18 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${quicksand.variable} antialiased`}
-      >
-        <SupabaseProvider>
-          <ThemeWrapper>
-            <Header />
-            {children}
-            <Footer />
-          </ThemeWrapper>
-        </SupabaseProvider>
-      </body>
-    </html>
+    <>
+      {children}    
+    </>
   );
 }
