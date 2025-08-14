@@ -1,0 +1,9 @@
+{
+  "name": "@oxymammoth/crypto",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./index": "./src/index.ts"
+  }
+}
