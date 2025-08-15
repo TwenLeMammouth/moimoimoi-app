@@ -12,6 +12,7 @@
   "dependencies": {
     "@oxymammoth/crypto": "file:../../packages/crypto",
     "@oxymammoth/ui": "file:../../packages/ui",
+    "@oxymammoth/supabase": "file:../../packages/supabase",
     "@radix-ui/react-slot": "^1.2.3",
     "@rive-app/react-canvas": "^4.23.0",
     "@rive-app/react-webgl": "^4.23.0",

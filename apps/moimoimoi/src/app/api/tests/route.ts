@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'// <- ton fichier supabase.ts classique
+import { supabaseServer } from '@/lib/supabase/supabase-server'// <- ton fichier supabase.ts classique
 
 export async function GET() {
-  const supabase = await createClient();
+  const supabase = await supabaseServer();
   
   const { data, error } = await supabase
     .from('tests')

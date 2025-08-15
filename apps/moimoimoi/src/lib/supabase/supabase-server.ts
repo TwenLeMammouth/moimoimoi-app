@@ -1,0 +1,1 @@
+export { createClient as supabaseServer } from '@oxymammoth/supabase/server-next'

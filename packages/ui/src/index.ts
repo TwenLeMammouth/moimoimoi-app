@@ -1,2 +1,10 @@
+
+export * from './lib/cn' 
 export * from './components/button'
+export * from './components/card'
+export * from './components/input'
+export * from './components/badge'
+export * from './components/section'
+export * from './components/divider-wavy'
+export * from './components/progress'
 export * from './motion/fade'

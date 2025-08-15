@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { supabase } from '@/lib/supabase/client'
+import { supabase } from '../../../../packages/supabase/src/client'
 import { v4 as uuidv4 } from 'uuid'
 import { useTestStore } from '@/hooks/useTestStore'
 import { QuestionCard, QuestionCardHeader, QuestionCardContent, QuestionCardFooter } from '@/components/ui/QuestionCard'

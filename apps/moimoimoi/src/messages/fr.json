@@ -1,4 +1,11 @@
 {
   "hero": { "title": "MoiMoiMoi — l'introspection augmentée" },
-  "cta": { "getStarted": "Commencer" }
+  "cta": { "getStarted": "Commencer" },
+  "runner": {
+    "next": "Suivant",
+    "prev": "Précédent",
+    "optionalNote": "Note personnelle (optionnel, 300 caractères max)",
+    "of": "sur",
+    "start": "Commencer le test"
+  }
 }

@@ -1,4 +1,11 @@
 {
   "hero": { "title": "MoiMoiMoi — augmented self-discovery" },
-  "cta": { "getStarted": "Get started" }
+  "cta": { "getStarted": "Get started" },
+  "runner": {
+    "next": "Next",
+    "prev": "Previous",
+    "optionalNote": "Personal note (optional, 300 characters max)",
+    "of": "of",
+    "start": "Start the test"
+  }
 }

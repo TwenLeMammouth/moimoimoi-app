@@ -1,0 +1,16 @@
+{
+  "name": "@oxymammoth/supabase",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./client": "./src/client.ts",
+    "./server-next": "./src/server-next.ts",
+    "./types": "./src/types.ts",
+    ".": "./src/index.ts"
+  },
+  "peerDependencies": {
+    "@supabase/supabase-js": ">=2",
+    "@supabase/ssr": ">=0.6"
+  }
+}

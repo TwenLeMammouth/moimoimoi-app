@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/lib/supabase/client'
+import { supabase } from '../../../../../packages/supabase/src/client'
 
 export default function ProfileSetup() {
   const [loading, setLoading] = useState(true)

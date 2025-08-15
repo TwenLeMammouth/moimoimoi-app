@@ -5,7 +5,7 @@ import createNextIntlPlugin from 'next-intl/plugin';
 /** @type {import('next').NextConfig} */
 
 const nextConfig: NextConfig = {
-  transpilePackages: ['@oxymammoth/ui', '@oxymammoth/crypto'],
+  transpilePackages: ['@oxymammoth/ui', '@oxymammoth/crypto', '@oxymammoth/supabase', '@oxymammoth/db'],
   experimental: { esmExternals: true }
 }
 
