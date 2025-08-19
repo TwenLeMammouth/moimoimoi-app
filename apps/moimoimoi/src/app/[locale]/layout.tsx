@@ -8,6 +8,7 @@ import {routing} from '@/i18n/routing';
 import {getMessages} from 'next-intl/server'
 import type {ReactNode} from 'react'
 import { SupabaseProvider } from '@/components/providers/SupabaseProvider';
+import Header from "@/components/Header";
 
 type LayoutProps = {
   children: ReactNode
@@ -35,14 +36,23 @@ export default async function RootLayout({children, params}: LayoutProps) {
   const messages = await getMessages({locale})
   return (
     <html lang={locale}>
-      <body className={`${quicksand.variable} antialiased`}>
+      <body className="min-h-screen bg-mmm text-ink">
+        {/* halo subtil */}
+        <div className="pointer-events-none fixed inset-0 opacity-[.6] mix-blend-screen"
+            style={{background:
+              'radial-gradient(60% 40% at 70% 0%, rgba(112,76,182,.18), transparent 60%),' +
+              'radial-gradient(40% 30% at 10% 20%, rgba(142,110,212,.10), transparent 60%)'
+            }}
+        />
         <NextIntlClientProvider 
           messages={messages} locale={locale}
           >
             <SupabaseProvider>
+              <Header />
               {children}
             </SupabaseProvider>
         </NextIntlClientProvider>
+
       </body>
     </html>
   )

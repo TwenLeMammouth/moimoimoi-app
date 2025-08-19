@@ -1,5 +1,6 @@
+
 import { notFound, redirect } from 'next/navigation'
-import { useState, type JSX } from 'react'
+import { type JSX } from 'react'
 import { supabaseServer } from '@/lib/supabase/supabase-server'
 import { Card, Badge, Progress } from '@oxymammoth/ui'
 
@@ -87,8 +88,8 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 // Petit bouton client pour lancer l’analyse IA
 function RequestAnalysisButton({ testId, sessionId }: { testId: string; sessionId: string }) {
   'use client'
-  const [loading, setLoading] = useState(false)
-  const [ok, setOk] = useState<null | string>(null)
+  // const [loading, setLoading] = useState(false)
+  // const [ok, setOk] = useState<null | string>(null)
   return (
     <Card className="p-4 flex items-center justify-between">
       <div>
@@ -96,21 +97,23 @@ function RequestAnalysisButton({ testId, sessionId }: { testId: string; sessionI
         <div className="text-sm opacity-70">Mise en file d’attente côté serveur</div>
       </div>
       <button
-        disabled={loading}
+        // disabled={loading}
         onClick={async () => {
-          setLoading(true)
+          // setLoading(true)
           try {
             const res = await fetch(`/api/tests/${testId}/sessions/${sessionId}/analysis`, { method: 'POST' })
             const j = await res.json()
             if (!res.ok) throw new Error(j.error || 'Erreur')
-            setOk(`Mis en file: ${j.enqueued}`)
+            // setOk(`Mis en file: ${j.enqueued}`)
           } catch (e: any) {
-            setOk(e.message)
-          } finally { setLoading(false) }
+            // setOk(e.message)
+          } finally { 
+            // setLoading(false) 
+          }
         }}
         className="px-4 py-2 rounded-2xl bg-brand text-white disabled:opacity-60"
-      >{loading ? '…' : 'Lancer'}</button>
-      {ok && <div className="text-sm opacity-70">{ok}</div>}
+      >{'Lancer'}</button>
+      {<div className="text-sm opacity-70">{'ok'}</div>}
     </Card>
   )
 }

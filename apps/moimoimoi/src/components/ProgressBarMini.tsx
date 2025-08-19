@@ -21,7 +21,7 @@ export function ProgressBarMini({
   size?: 'sm'|'md'|'lg'
   showLegend?: boolean
 }) {
-  const dims = size === 'lg' ? 'w-10 h-10' : size === 'sm' ? 'w-8 h-8' : 'w-9 h-9'
+  const dims = size === 'lg' ? 'w-5 h-5' : size === 'sm' ? 'w-3.5 h-3.5' : 'w-4 h-4'
 
   const facetsList: Facet[] = (facets && facets.length)
     ? facets
@@ -43,11 +43,11 @@ export function ProgressBarMini({
     )}>
       {byFacet.map(({ facet, qs, status }) => (
         <div key={facet.facet_id} className="space-y-2">
-          <div className="flex items-center gap-2 text-sm font-medium text-ink/80 dark:text-white/80">
-            <span className={cn('inline-block w-20 h-20 rounded-full', iaDot(status))} />
+          <div className="flex items-center gap-2 text-xs font-medium text-ink/80 dark:text-white/80">
+            <span className={cn('inline-block w-2 h-2 rounded-full', iaDot(status))} />
             <span className="capitalize">{facet.name || facet.category || facet.facet_id}</span>
           </div>
-          <div className="flex flex-wrap gap-5">
+          <div className="flex flex-wrap gap-1.5">
             {qs.map((q, i) => {
               const ans = answers[q.id]
               const isAnswered = typeof ans?.numeric_answer === 'number'
@@ -60,7 +60,7 @@ export function ProgressBarMini({
                   aria-label={`Q${i+1}`}
                   title={`Q${i+1}`}
                   className={cn(
-                    'w-20 h-20 rounded-[4px] border transition-all',
+                    'rounded-[4px] border transition-all',
                     dims,
                     'border-black/15 dark:border-white/20',
                     isLocked
@@ -80,7 +80,7 @@ export function ProgressBarMini({
       ))}
 
       {showLegend && (
-        <div className="flex flex-wrap items-center gap-6 pt-1 text-[21px] text-muted">
+        <div className="flex flex-wrap items-center gap-3 pt-1 text-[11px] text-muted">
           {[
             ['bg-gray-300 dark:bg-gray-700','Non répondu'],
             ['bg-emerald-500','Répondu'],
@@ -88,7 +88,7 @@ export function ProgressBarMini({
             ['bg-gray-400','Facette analysée'],
           ].map(([dot, label]) => (
             <span key={label} className="inline-flex items-center gap-1">
-              <span className={cn('inline-block w-20 h-20 rounded-[3px] border border-black/15 dark:border-white/20', dot)} />
+              <span className={cn('inline-block w-3 h-3 rounded-[3px] border border-black/15 dark:border-white/20', dot)} />
               {label}
             </span>
           ))}

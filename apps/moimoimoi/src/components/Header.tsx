@@ -1,84 +1,21 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { supabase } from '../../../../packages/supabase/src/client'
 import Logo from './Logo'
 
 export default function Header() {
-  const [user, setUser] = useState<any>(null)
-  const [displayName, setDisplayName] = useState<string | null>(null)
-
-  useEffect(() => {
-    const fetchUserAndProfile = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      setUser(user)
-
-      if (user?.id) {
-        const { data: profile, error } = await supabase
-          .from('user_profile')
-          .select('display_name')
-          .eq('user_id', user.id)
-          .single()
-
-        if (!error && profile?.display_name) {
-          setDisplayName(profile.display_name)
-        }
-      }
-    }
-
-    fetchUserAndProfile()
-
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      const user = session?.user ?? null
-      setUser(user)
-
-      if (user?.id) {
-        supabase
-          .from('user_profile')
-          .select('display_name')
-          .eq('user_id', user.id)
-          .single()
-          .then(({ data: profile }) => {
-            if (profile?.display_name) setDisplayName(profile.display_name)
-          })
-      } else {
-        setDisplayName(null)
-      }
-    })
-
-    return () => {
-      listener.subscription.unsubscribe()
-    }
-  }, [])
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut()
-  }
-
   return (
-    <header className="w-full px-4 py-2 border-b flex justify-between items-center">
-      <Link href="/" className="flex items-center gap-2">
-        <Logo size={40} />
-        <span className="font-bold text-lg">MoiMoiMoi</span>
-      </Link>
-
-      <div className="flex items-center gap-4">
-        {displayName && (
-          <span className="text-sm font-medium text-gray-800 dark:text-white">
-            Salut {displayName} !
-          </span>
-        )}
-
-        {user ? (
-          <button onClick={handleLogout} className="text-sm underline">
-            Déconnexion
-          </button>
-        ) : (
-          <Link href="/login" className="text-sm underline">
-            Connexion
-          </Link>
-        )}
+    <header className="sticky top-0 z-40 border-b border-black/10 dark:border-white/10 bg-white/70 dark:bg-zinc-900/70 backdrop-blur">
+      <div className="mx-auto max-w-5xl px-4 py-3 flex items-center gap-4">
+        <Logo size={60}/>
+        <Link href="/" className="font-semibold tracking-tight text-xl">
+          MoiMoiMoi <span className="opacity-50 text-xs uppercase">beta</span>
+        </Link>
+        <nav className="ml-auto flex items-center gap-3 text-sm">
+          <Link className="opacity-80 hover:opacity-100" href="/fr/tests">Tests</Link>
+          <Link className="opacity-80 hover:opacity-100" href="/fr/products">Produits</Link>
+          <Link className="opacity-80 hover:opacity-100" href="/fr/profile">Profil</Link>
+        </nav>
       </div>
     </header>
   )
