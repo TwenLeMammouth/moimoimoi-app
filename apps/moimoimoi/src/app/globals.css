@@ -1,5 +1,9 @@
+/* doit être la 1ère ligne */
 @import "@oxymammoth/ui/tailwind.css";
+
+/* tes règles globales ensuite */
 :root { color-scheme: light dark; }
 html, body, #__next { height: 100%; }
 
+/* décor optionnel */
 body { background-image: radial-gradient(50% 50% at 50% 0%, rgba(0,0,0,.04), transparent 60%); }

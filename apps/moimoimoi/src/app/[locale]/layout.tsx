@@ -1,5 +1,5 @@
 
-import './globals.css'
+// import './globals.css'
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import {NextIntlClientProvider , hasLocale} from 'next-intl'
@@ -11,7 +11,6 @@ import { SupabaseProvider } from '@/components/providers/SupabaseProvider';
 
 type LayoutProps = {
   children: ReactNode
-  // ⬇️ params est maintenant une Promise
   params: Promise<{locale: string}>
 }
 
@@ -38,7 +37,7 @@ export default async function RootLayout({children, params}: LayoutProps) {
     <html lang={locale}>
       <body className={`${quicksand.variable} antialiased`}>
         <NextIntlClientProvider 
-          // messages={messages} locale={locale}
+          messages={messages} locale={locale}
           >
             <SupabaseProvider>
               {children}

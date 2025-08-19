@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@oxymammoth/crypto": "file:../../packages/crypto",
-    "@oxymammoth/ui": "file:../../packages/ui",
     "@oxymammoth/supabase": "file:../../packages/supabase",
+    "@oxymammoth/ui": "file:../../packages/ui",
     "@radix-ui/react-slot": "^1.2.3",
     "@rive-app/react-canvas": "^4.23.0",
     "@rive-app/react-webgl": "^4.23.0",
@@ -44,11 +44,11 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "autoprefixer": "^10.4.20",
+    "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
-    "postcss": "^8.4.40",
-    "tailwindcss": "^4",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.11",
     "tw-animate-css": "^1.3.5",
     "typescript": "^5"
   }

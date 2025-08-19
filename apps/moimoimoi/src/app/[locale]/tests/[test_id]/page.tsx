@@ -1,8 +1,9 @@
 import TestRunnerClient from '@/features/testrunner/TestRunnerClient'
 import type { Question, TestData } from '@/features/testrunner/types'
 import { supabaseServer } from '../../../../lib/supabase/supabase-server'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import type { JSX } from 'react'
+import { hasAccessToTest } from '@/lib/access'
 
 async function fetchTestData(test_id_param: string, locale: string): Promise<TestData> {
   const sb = await supabaseServer()
@@ -58,13 +59,16 @@ async function fetchTestData(test_id_param: string, locale: string): Promise<Tes
   }
 }
 
-export default async function Page(
-  { params }: { params: Promise<{ locale: string; test_id: string }> }
-): Promise<JSX.Element> {
+export default async function Page({ params }: { params: Promise<{ locale: string; test_id: string }> }) {
   const { locale, test_id } = await params
+
+  const access = await hasAccessToTest(test_id)
+  if (!access.ok) {
+    // Redirige vers la page Produits si pas d’accès
+    // (tu as déjà /products + Stripe Checkout)
+    redirect('/products')
+  }
+
   const data = await fetchTestData(test_id, locale)
-  return <TestRunnerClient 
-    questions={data.questions} 
-    // testId={data.test_id}
-    />
+  return <TestRunnerClient testId={data.test_id} questions={data.questions} locale={locale}/>
 }

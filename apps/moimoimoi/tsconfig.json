@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../../packages/supabase/src/client.ts", "../../packages/supabase/src/server-next.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../../packages/supabase/src/client.ts", "../../packages/supabase/src/server-next.ts", "tailwind.config.cjs"],
   "exclude": ["node_modules"]
 }

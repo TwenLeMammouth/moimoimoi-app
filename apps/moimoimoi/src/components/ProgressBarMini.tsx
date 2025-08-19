@@ -1,102 +1,76 @@
 'use client'
 
+import React from 'react'
 import { cn } from '@/lib/utils'
 
-interface Question {
-  id: string
-  facet_id: string
-}
+type Question = { id: string; facet_id: string }
+type Facet    = { facet_id: string; category?: string; name?: string }
+type Answer   = { numeric_answer?: number | null; text_answer?: string | null }
 
-interface Response {
-  question_id: string
-}
+type FacetStatus = 'queued'|'processing'|'ready'|'error'
 
-interface Facet {
-  facet_id: string
-  category: string
-}
-
-interface IaSession {
-  facet_id: string
-  status: 'pending' | 'processing' | 'done'
-}
-
-interface Answer {
-  numeric_answer?: number
-  text_answer?: string
-}
-
-interface Props {
+export function ProgressBarMini({
+  questions, facets, currentQuestionId, answers, facetStatus = {}, className, size = 'md', showLegend = false,
+}: {
   questions: Question[]
-  responses: Response[]
-  facets: Facet[]
-  iaSessions: IaSession[]
+  facets?: Facet[]
   currentQuestionId: string
   answers: Record<string, Answer>
-}
+  facetStatus?: Record<string, FacetStatus>
+  className?: string
+  size?: 'sm'|'md'|'lg'
+  showLegend?: boolean
+}) {
+  const dims = size === 'lg' ? 'w-10 h-10' : size === 'sm' ? 'w-8 h-8' : 'w-9 h-9'
 
-export default function ProgressBarMini({
-  questions,
-  responses,
-  facets,
-  iaSessions,
-  currentQuestionId,
-  answers,
-}: Props) {
-  const answeredIds = new Set(responses.map(r => r.question_id))
-  const iaDoneFacets = new Set(
-    iaSessions.filter(s => s.status === 'done').map(s => s.facet_id)
-  )
+  const facetsList: Facet[] = (facets && facets.length)
+    ? facets
+    : Array.from(new Set(questions.map(q => q.facet_id))).map(fid => ({ facet_id: fid }))
 
-  const questionsByFacet = facets.map(facet => {
-    const relatedQuestions = questions.filter(q => q.facet_id === facet.facet_id)
-    const iaStatus = iaSessions.find(s => s.facet_id === facet.facet_id)?.status ?? 'pending'
-    return {
-      facet,
-      questions: relatedQuestions,
-      iaStatus,
-    }
+  const byFacet = facetsList.map(f => {
+    const qs = questions.filter(q => q.facet_id === f.facet_id)
+    const status: FacetStatus = facetStatus[f.facet_id] ?? 'queued'
+    return { facet: f, qs, status }
   })
 
-  const getIaSymbol = (status: string) => {
-    switch (status) {
-      case 'done': return '✅'
-      case 'processing': return '🌀'
-      case 'pending': return '⏳'
-      default: return ''
-    }
-  }
-  
+  const iaDot = (s: FacetStatus) =>
+    s === 'ready' ? 'bg-emerald-500' : s === 'processing' ? 'bg-brand' : s === 'queued' ? 'bg-muted' : 'bg-amber-500'
+
   return (
-    <div className="w-full flex flex-wrap justify-center gap-4 p-2 border rounded-md bg-gray-50 dark:bg-gray-900 dark:border-gray-700">
-      {questionsByFacet.map(({ facet, questions, iaStatus }) => (
-        <div key={facet.facet_id} className="flex flex-col p-2 items-center rounded-md bg-white">
-          <div className="text-xs text-gray-600 dark:text-gray-300 mb-1 font-medium capitalize">
-            {facet.facet_id} <span className="ml-1">{getIaSymbol(iaStatus)}</span>
+    <div className={cn(
+      'w-full space-y-3 p-3 rounded-xl border border-soft bg-white/90 dark:bg-gray-900/80 shadow-soft',
+      className
+    )}>
+      {byFacet.map(({ facet, qs, status }) => (
+        <div key={facet.facet_id} className="space-y-2">
+          <div className="flex items-center gap-2 text-sm font-medium text-ink/80 dark:text-white/80">
+            <span className={cn('inline-block w-20 h-20 rounded-full', iaDot(status))} />
+            <span className="capitalize">{facet.name || facet.category || facet.facet_id}</span>
           </div>
-          <div className="flex flex-wrap gap-1">
-            {questions.map((q, index) => {
-              const isActive = q.id === currentQuestionId
-              const isLocked = iaDoneFacets.has(q.facet_id)
-
-              const answer = answers[q.id]
-              const isAnswered = !!answer?.numeric_answer
-              const isEnriched = isAnswered && !!answer?.text_answer?.trim()
-
+          <div className="flex flex-wrap gap-5">
+            {qs.map((q, i) => {
+              const ans = answers[q.id]
+              const isAnswered = typeof ans?.numeric_answer === 'number'
+              const isEnriched = isAnswered && !!ans?.text_answer?.trim()
+              const isActive = currentQuestionId === q.id
+              const isLocked = status === 'ready'
               return (
                 <div
                   key={q.id}
-                  title={`Question ${index + 1}`}
+                  aria-label={`Q${i+1}`}
+                  title={`Q${i+1}`}
                   className={cn(
-                    'w-4 h-4 rounded-sm border transition-all',
+                    'w-20 h-20 rounded-[4px] border transition-all',
+                    dims,
+                    'border-black/15 dark:border-white/20',
                     isLocked
-                      ? 'bg-gray-400 border-gray-500'
+                      ? 'bg-gray-400'
                       : isEnriched
-                      ? 'bg-blue-400 border-blue-600'
-                      : isAnswered
-                      ? 'bg-green-400 border-green-600'
-                      : 'bg-gray-200 border-gray-300',
-                    isActive && 'ring-2 ring-green-700 dark:ring-white ring-offset-2'
+                        ? 'bg-indigo-500'
+                        : isAnswered
+                          ? 'bg-emerald-500'
+                          : 'bg-gray-300 dark:bg-gray-700',
+                    isActive && 'ring-2 ring-brand ring-offset-1 ring-offset-white dark:ring-offset-gray-900'
                   )}
                 />
               )
@@ -104,6 +78,22 @@ export default function ProgressBarMini({
           </div>
         </div>
       ))}
+
+      {showLegend && (
+        <div className="flex flex-wrap items-center gap-6 pt-1 text-[21px] text-muted">
+          {[
+            ['bg-gray-300 dark:bg-gray-700','Non répondu'],
+            ['bg-emerald-500','Répondu'],
+            ['bg-indigo-500','Réponse + note'],
+            ['bg-gray-400','Facette analysée'],
+          ].map(([dot, label]) => (
+            <span key={label} className="inline-flex items-center gap-1">
+              <span className={cn('inline-block w-20 h-20 rounded-[3px] border border-black/15 dark:border-white/20', dot)} />
+              {label}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

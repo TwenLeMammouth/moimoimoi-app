@@ -1,3 +1,9 @@
+
+
 @import "@oxymammoth/ui/tailwind.css";
 :root { color-scheme: light dark; }
 html, body, #__next { height: 100%; }
+
+@tailwind utilities;
+/* @tailwind base;
+@tailwind components; */
